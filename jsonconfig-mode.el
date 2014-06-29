@@ -77,7 +77,7 @@
        jsonconfig-basic-offset))))
 
 ;;;###autoload
-(define-derived-mode jsonconfig-mode prog-mode "JsonConfig"
+(define-derived-mode jsonconfig-mode prog-mode "JSON config"
   "Major mode to edit JSON configuration."
   (set-syntax-table jsonconfig-syntax-table)
   (setq-local comment-start "")
