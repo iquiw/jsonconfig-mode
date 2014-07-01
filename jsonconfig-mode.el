@@ -62,9 +62,10 @@
   (list
    (cons (regexp-opt '("null" "true" "false")) font-lock-keyword-face)
    ;; number
-   '("[[:digit:].]+" . font-lock-constant-face)
+   '("-?[[:digit:]]+\\(\\.[[:digit:]]+\\)?\\([Ee][-+]?[[:digit:]]+\\)?"
+     . font-lock-constant-face)
    ;; object key
-   '("\\(?:^[[:space:]]*\\|{[[:space:]]*\\)\\(\"[^\"]*\"\\)[[:space:]]*:"
+   '("\\(?:^[[:space:]]*\\|[{,][[:space:]]*\\)\\(\"[^\"]*\"\\)[[:space:]]*:"
      1 font-lock-variable-name-face t)))
 
 (defun jsonconfig-smie-rules (kind token)
