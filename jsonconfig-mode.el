@@ -33,7 +33,13 @@
 
 (defcustom jsonconfig-basic-offset 2
   "Basic indent offset for JSON."
-  :type 'integer)
+  :type 'integer
+  :group 'jsonconfig)
+
+(defcustom jsonconfig-mode-hook nil
+  "Hook called after `jsonconfig-mode' is initialized."
+  :type 'hook
+  :group 'jsonconfig)
 
 (defconst jsonconfig-grammer
   (smie-prec2->grammar
@@ -79,7 +85,8 @@
   (set-syntax-table jsonconfig-syntax-table)
   (setq-local comment-start "")
   (smie-setup jsonconfig-grammer 'jsonconfig-smie-rules)
-  (setq font-lock-defaults (list jsonconfig-font-lock-keywords)))
+  (setq font-lock-defaults (list jsonconfig-font-lock-keywords))
+  (run-hooks 'jsonconfig-mode-hook))
 
 (provide 'jsonconfig-mode)
 ;;; jsonconfig-mode ends here
