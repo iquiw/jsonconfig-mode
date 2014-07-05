@@ -1,5 +1,7 @@
 Feature: JSON config mode auto indentation
-  JSON config mode provides auto indentation for JSON
+  In order to edit JSON efficiently
+  As an Emacs user
+  I want to indent code automatically
 
   Scenario: Indent after '{'
     Given the buffer is empty
