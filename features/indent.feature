@@ -34,7 +34,7 @@ Feature: JSON config mode auto indentation
     When I insert:
     """
     {
-        \"name\": {
+        "name": {
     """
     And I place the cursor after ": "
     And I press "C-j"
@@ -92,7 +92,7 @@ Feature: JSON config mode auto indentation
     When I insert:
     """
     {
-        \"name\": true,
+        "name": true,
     """
     And I press "C-j"
     Then current column should be 4
@@ -127,7 +127,7 @@ Feature: JSON config mode auto indentation
     When I insert:
     """
     {
-      \"name\": false,
+      "name": false,
     """
     And I place the cursor before ","
     And I press "C-j"
@@ -164,7 +164,7 @@ Feature: JSON config mode auto indentation
     When I insert:
     """
     {
-        \"name\": {
+        "name": {
     """
     And I press "C-j"
     Then current column should be 8
@@ -182,7 +182,7 @@ Feature: JSON config mode auto indentation
     When I insert:
     """
     {
-        \"name\": null,
+        "name": null,
     """
     And I place the cursor before ","
     And I press "C-j"
