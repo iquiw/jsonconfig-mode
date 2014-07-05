@@ -77,7 +77,8 @@
 (defun jsonconfig-smie-rules (kind token)
   (pcase (cons kind token)
     (`(:elem . basic) jsonconfig-basic-offset)
-    (`(,_ . ",") (smie-rule-separator kind))))
+    (`(,_ . ",") (let ((smie-rule-separator-outdent jsonconfig-basic-offset))
+                   (smie-rule-separator kind)))))
 
 ;;;###autoload
 (define-derived-mode jsonconfig-mode prog-mode "JSON config"
