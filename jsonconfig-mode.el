@@ -1,4 +1,4 @@
-;;; jsonconfig-mode --- Major mode to edit JSON configuration.
+;;; jsonconfig-mode.el --- Major mode to edit JSON configuration
 
 ;; Copyright (C) 2014 by Iku Iwasa
 
@@ -89,4 +89,4 @@
   (run-hooks 'jsonconfig-mode-hook))
 
 (provide 'jsonconfig-mode)
-;;; jsonconfig-mode ends here
+;;; jsonconfig-mode.el ends here
