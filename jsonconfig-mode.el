@@ -84,7 +84,7 @@
 (define-derived-mode jsonconfig-mode prog-mode "JSON config"
   "Major mode to edit JSON configuration."
   (set-syntax-table jsonconfig-syntax-table)
-  (setq-local comment-start "")
+  (set (make-local-variable 'comment-start) "")
   (smie-setup jsonconfig-grammer 'jsonconfig-smie-rules)
   (setq font-lock-defaults (list jsonconfig-font-lock-keywords))
   (run-hooks 'jsonconfig-mode-hook))
