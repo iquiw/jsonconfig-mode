@@ -64,15 +64,20 @@
     (modify-syntax-entry ?} "){" table)
     table))
 
+(defconst jsonconfig-number-regexp
+  "-?[[:digit:]]+\\(\\.[[:digit:]]+\\)?\\([Ee][-+]?[[:digit:]]+\\)?")
+
+(defconst jsonconfig-property-name-regexp
+  (concat
+   "^[[:space:]]*[{,]?[[:space:]]*"
+   "\\(\"\\(?:\\\\\"\\\|\\(?:[^\\]\\\\\"\\|[^\"]\\)*\\)\"\\)"
+   "[[:space:]]*:"))
+
 (defconst jsonconfig-font-lock-keywords
   (list
    (cons (regexp-opt '("null" "true" "false")) font-lock-keyword-face)
-   ;; number
-   '("-?[[:digit:]]+\\(\\.[[:digit:]]+\\)?\\([Ee][-+]?[[:digit:]]+\\)?"
-     . font-lock-constant-face)
-   ;; object key
-   '("\\(?:^[[:space:]]*\\|[{,][[:space:]]*\\)\\(\"[^\"]*\"\\)[[:space:]]*:"
-     1 font-lock-variable-name-face t)))
+   (cons jsonconfig-number-regexp font-lock-constant-face)
+   (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)))
 
 (defun jsonconfig-smie-rules (kind token)
   (pcase (cons kind token)

@@ -5,10 +5,11 @@
 (require 'jsonconfig-mode)
 
 (Before
- (electric-indent-mode 0)
- (electric-pair-mode 0)
  (switch-to-buffer
   (get-buffer-create "*jsonconfig-mode*"))
+ (electric-indent-mode 0)
+ (electric-pair-mode 0)
+ (font-lock-mode 1)
  (setq indent-tabs-mode nil)
  (global-set-key (kbd "C-j") 'newline-and-indent)
  (jsonconfig-mode))
