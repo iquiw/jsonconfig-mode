@@ -9,11 +9,11 @@ Feature: JSON config mode auto indentation
     And I press "C-j"
     Then current column should be 2
 
-    When I insert "\"name1\": {"
+    When I insert ""name1": {"
     And I press "C-j"
     Then current column should be 4
 
-    When I insert " \"name2\": {"
+    When I insert " "name2": {"
     And I press "C-j"
     Then current column should be 7
 
@@ -25,7 +25,7 @@ Feature: JSON config mode auto indentation
     Then current column should be 0
 
     Given the buffer is empty
-    When I insert "{  \"name1\": {"
+    When I insert "{  "name1": {"
     And I place the cursor after ": "
     And I press "C-j"
     Then current column should be 3
@@ -79,12 +79,12 @@ Feature: JSON config mode auto indentation
 
   Scenario: Indent after ','
     Given the buffer is empty
-    When I insert "{ \"name\": true,"
+    When I insert "{ "name": true,"
     And I press "C-j"
     Then current column should be 2
 
     Given the buffer is empty
-    When I insert "{  \"name\": true,"
+    When I insert "{  "name": true,"
     And I press "C-j"
     Then current column should be 3
 
@@ -118,7 +118,7 @@ Feature: JSON config mode auto indentation
 
   Scenario: Indent before ','
     Given the buffer is empty
-    When I insert "{ \"name\": false,"
+    When I insert "{ "name": false,"
     And I place the cursor before ","
     And I press "C-j"
     Then current column should be 0
