@@ -85,6 +85,18 @@
     (`(,_ . ",") (let ((smie-rule-separator-outdent jsonconfig-basic-offset))
                    (smie-rule-separator kind)))))
 
+(defun jsonconfig-create-imenu-index ()
+  (goto-char (point-min))
+  (skip-syntax-forward " ")
+  (when (looking-at-p "{")
+    (let (result)
+      (while (re-search-forward jsonconfig-property-name-regexp nil t)
+        (when (= 1 (nth 0 (syntax-ppss)))
+          (let ((s (match-string-no-properties 1))
+                (p (match-beginning 1)))
+            (push (cons (substring s 1 (- (length s) 1)) p) result))))
+      (list (cons "Variables" (nreverse result))))))
+
 ;;;###autoload
 (define-derived-mode jsonconfig-mode prog-mode "JSON config"
   "Major mode to edit JSON configuration."
@@ -92,6 +104,7 @@
   (set (make-local-variable 'comment-start) "")
   (smie-setup jsonconfig-grammer 'jsonconfig-smie-rules)
   (setq font-lock-defaults (list jsonconfig-font-lock-keywords))
+  (setq imenu-create-index-function 'jsonconfig-create-imenu-index)
   (run-hooks 'jsonconfig-mode-hook))
 
 (provide 'jsonconfig-mode)

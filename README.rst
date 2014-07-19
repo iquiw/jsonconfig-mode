@@ -9,6 +9,7 @@ Feature
 =======
 * Auto-indentation based on SMIE_.
 * Highlighting.
+* Imenu (top-level property names are indexed).
 
 
 Installation

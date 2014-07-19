@@ -4,7 +4,10 @@
 (require 'espuds)
 (require 'jsonconfig-mode)
 
+(defvar jsonconfig-test-imenu-output)
+
 (Before
+ (setq jsonconfig-test-imenu-output nil)
  (switch-to-buffer
   (get-buffer-create "*jsonconfig-mode*"))
  (electric-indent-mode 0)
