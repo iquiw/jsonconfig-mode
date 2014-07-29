@@ -73,11 +73,15 @@
    "\\(\"\\(?:\\\\\"\\\|\\(?:[^\\]\\\\\"\\|[^\"]\\)*\\)\"\\)"
    "[[:space:]]*:"))
 
+(defconst jsonconfig-url-regexp
+  "\\(https?\\|git\\)://[]-[[:alnum:]._~:/?#@!$&'()*+,;=]+")
+
 (defconst jsonconfig-font-lock-keywords
   (list
    (cons (regexp-opt '("null" "true" "false")) font-lock-keyword-face)
    (cons jsonconfig-number-regexp font-lock-constant-face)
-   (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)))
+   (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)
+   (list jsonconfig-url-regexp 0 ''link t)))
 
 (defun jsonconfig-smie-rules (kind token)
   (pcase (cons kind token)
