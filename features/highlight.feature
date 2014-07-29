@@ -51,9 +51,9 @@ Feature: JSON config mode highlighting
     """
     And I go to word "abc"
     Then current point should have the font-lock-variable-name-face face
-    And I go to word "e"
+    When I go to word "e"
     Then current point should have the font-lock-variable-name-face face
-    And I go to word "efg"
+    When I go to word "efg"
     Then current point should have the font-lock-variable-name-face face
     When I place the cursor before ""\"""
     Then current point should have the font-lock-variable-name-face face
@@ -70,8 +70,24 @@ Feature: JSON config mode highlighting
     """
     And I go to word "123"
     Then current point should have the font-lock-string-face face
-    And I go to word "CDE"
+    When I go to word "CDE"
     Then current point should have the font-lock-string-face face
+
+  Scenario: Highlight for URL
+    Given the buffer is empty
+    When I insert:
+    """
+    { "homepage": [ "http://www.example.com/test?a=1&b=20",
+                    "https://user@example.jp:8443/~foo" ]
+    , "repo": "git://github.com/"
+    }
+    """
+    And I go to word "test"
+    Then current point should have the link face
+    When I go to word "foo"
+    Then current point should have the link face
+    When I go to word "github"
+    Then current point should have the link face
 
   Scenario: No highlight
     Given the buffer is empty
@@ -83,9 +99,9 @@ Feature: JSON config mode highlighting
     """
     And I place the cursor before "{"
     Then current point should have no face
-    And I place the cursor before ","
+    When I place the cursor before ","
     Then current point should have no face
-    And I place the cursor before ":"
+    When I place the cursor before ":"
     Then current point should have no face
-    And I place the cursor before "["
+    When I place the cursor before "["
     Then current point should have no face
