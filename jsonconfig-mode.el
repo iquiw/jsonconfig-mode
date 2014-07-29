@@ -74,7 +74,7 @@
    "[[:space:]]*:"))
 
 (defconst jsonconfig-url-regexp
-  "\\(https?\\|git\\)://[]-[[:alnum:]._~:/?#@!$&'()*+,;=]+")
+  "\\(https?\\|git\\)://\\([][]\\|[-[:alnum:]%._~:/?#@!$&'()*+,;=]\\)+")
 
 (defconst jsonconfig-font-lock-keywords
   (list
