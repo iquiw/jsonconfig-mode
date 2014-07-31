@@ -83,11 +83,11 @@ Feature: JSON config mode highlighting
     }
     """
     And I go to word "test"
-    Then current point should have the link face
+    Then current point should have the button face
     When I go to word "foo"
-    Then current point should have the link face
+    Then current point should have the button face
     When I go to word "github"
-    Then current point should have the link face
+    Then current point should have the button face
 
   Scenario: No highlight
     Given the buffer is empty

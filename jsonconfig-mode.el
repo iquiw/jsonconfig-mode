@@ -25,6 +25,7 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'button)
 (require 'smie)
 
 (defgroup jsonconfig nil
@@ -81,7 +82,17 @@
    (cons (regexp-opt '("null" "true" "false")) font-lock-keyword-face)
    (cons jsonconfig-number-regexp font-lock-constant-face)
    (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)
-   (list jsonconfig-url-regexp 0 ''link t)))
+   (list 'jsonconfig-activate-link 0 ''link t)))
+
+(defun jsonconfig-activate-link (limit)
+  (when (re-search-forward jsonconfig-url-regexp limit t)
+    (make-button (match-beginning 0) (match-end 0)
+                 'action 'jsonconfig-open-link)
+    t))
+
+(defun jsonconfig-open-link (button)
+  (browse-url (buffer-substring-no-properties
+               (button-start button) (button-end button))))
 
 (defun jsonconfig-smie-rules (kind token)
   (pcase (cons kind token)
