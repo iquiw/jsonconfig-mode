@@ -1,6 +1,6 @@
-==================
- JSON config mode
-==================
+===========================
+ JSON config mode |travis|
+===========================
 
 Emacs major mode to edit JSON format configuration, such as `package.json`_.
 
@@ -37,3 +37,5 @@ Licensed under the GPL 3+ license.
 
 .. _package.json: https://www.npmjs.org/doc/package.json.html
 .. _SMIE: http://www.gnu.org/software/emacs/manual/html_node/elisp/SMIE.html
+.. |travis| image:: https://api.travis-ci.org/iquiw/jsonconfig-mode.svg?branch=master
+            :target: https://travis-ci.org/iquiw/jsonconfig-mode
