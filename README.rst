@@ -27,8 +27,7 @@ Setup from Git
    .. code:: emacs-lisp
 
       (add-to-list 'load-path "/path/to/jsonconfig-mode")
-      (require 'jsonconfig-mode)
-      (add-to-list 'auto-mode-alist '(".json\\'" . jsonconfig-mode))
+      (require 'jsonconfig-config)
 
 
 License
