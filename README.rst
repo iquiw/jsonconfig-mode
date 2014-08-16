@@ -9,6 +9,7 @@ Feature
 =======
 * Auto-indentation based on SMIE_.
 * Highlighting.
+* Hyperlink (button'ize URL-like strings)
 * Imenu (top-level property names are indexed).
 
 
