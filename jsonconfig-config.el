@@ -1,4 +1,4 @@
-;;; jsonconfig-config --- jsonconfig-mode configuration.
+;;; jsonconfig-config.el --- jsonconfig-mode configuration.
 
 ;; Copyright (C) 2014 by Iku Iwasa
 
