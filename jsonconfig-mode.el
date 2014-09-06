@@ -82,28 +82,31 @@
    (cons (regexp-opt '("null" "true" "false")) font-lock-keyword-face)
    (cons jsonconfig-number-regexp font-lock-constant-face)
    (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)
-   (list 'jsonconfig-activate-link 0 ''link t)))
+   (list 'jsonconfig--activate-link 0 ''link t)))
 
-(defun jsonconfig-activate-link (limit)
+(defun jsonconfig--activate-link (limit)
   (when (re-search-forward jsonconfig-url-regexp limit t)
     (make-button (match-beginning 0) (match-end 0)
-                 'action 'jsonconfig-open-link)
+                 'action 'jsonconfig--open-link)
     t))
 
-(defun jsonconfig-open-link (button)
+(defun jsonconfig--open-link (button)
   (browse-url (buffer-substring-no-properties
                (button-start button) (button-end button))))
 
-(defun jsonconfig-smie-rules (kind token)
+(defun jsonconfig--smie-rules (kind token)
   (pcase (cons kind token)
     (`(:elem . basic) jsonconfig-basic-offset)
     (`(,_ . ",") (let ((smie-rule-separator-outdent jsonconfig-basic-offset))
                    (smie-rule-separator kind)))))
 
-(defun jsonconfig-create-imenu-index ()
+(defun jsonconfig--file-object-p ()
   (goto-char (point-min))
   (skip-syntax-forward " ")
-  (when (looking-at-p "{")
+  (looking-at-p "{"))
+
+(defun jsonconfig-create-imenu-index ()
+  (when (jsonconfig--file-object-p)
     (let (result)
       (while (re-search-forward jsonconfig-property-name-regexp nil t)
         (when (= 1 (nth 0 (syntax-ppss)))
@@ -117,7 +120,7 @@
   "Major mode to edit JSON configuration."
   (set-syntax-table jsonconfig-syntax-table)
   (set (make-local-variable 'comment-start) "")
-  (smie-setup jsonconfig-grammer 'jsonconfig-smie-rules)
+  (smie-setup jsonconfig-grammer 'jsonconfig--smie-rules)
   (setq font-lock-defaults (list jsonconfig-font-lock-keywords))
   (setq imenu-create-index-function 'jsonconfig-create-imenu-index)
   (run-hooks 'jsonconfig-mode-hook))
