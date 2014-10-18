@@ -85,28 +85,33 @@
    (list 'jsonconfig--activate-link 0 ''link t)))
 
 (defun jsonconfig--activate-link (limit)
+  "Activate URL like string from the current point to LIMIT as button."
   (when (re-search-forward jsonconfig-url-regexp limit t)
     (make-button (match-beginning 0) (match-end 0)
                  'action 'jsonconfig--open-link)
     t))
 
 (defun jsonconfig--open-link (button)
+  "Open URL specified by BUTTON by browser."
   (browse-url (buffer-substring-no-properties
                (button-start button) (button-end button))))
 
 (defun jsonconfig--smie-rules (kind token)
+  "Specify SMIE rules for JSON according to KIND and TOKEN."
   (pcase (cons kind token)
     (`(:elem . basic) jsonconfig-basic-offset)
     (`(,_ . ",") (let ((smie-rule-separator-outdent jsonconfig-basic-offset))
                    (smie-rule-separator kind)))))
 
-(defun jsonconfig--file-object-p ()
+(defun jsonconfig--buffer-object-p ()
+  "Return whether the buffer is JSON object."
   (goto-char (point-min))
   (skip-syntax-forward " ")
   (looking-at-p "{"))
 
 (defun jsonconfig-create-imenu-index ()
-  (when (jsonconfig--file-object-p)
+  "Create `imenu' index from top level property names."
+  (when (jsonconfig--buffer-object-p)
     (let (result)
       (while (re-search-forward jsonconfig-property-name-regexp nil t)
         (when (= 1 (nth 0 (syntax-ppss)))
