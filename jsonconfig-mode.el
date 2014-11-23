@@ -105,6 +105,7 @@
 (defun jsonconfig--smie-rules (kind token)
   "Specify SMIE rules for JSON according to KIND and TOKEN."
   (pcase (cons kind token)
+    (`(:elem . args) (- (current-indentation) (current-column)))
     (`(:elem . basic) jsonconfig-basic-offset)
     (`(,_ . ",") (let ((smie-rule-separator-outdent jsonconfig-basic-offset))
                    (smie-rule-separator kind)))))

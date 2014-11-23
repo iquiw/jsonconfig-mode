@@ -149,6 +149,16 @@ Feature: JSON config mode auto indentation
     And I press "C-j"
     Then current column should be 0
 
+  Scenario: Indent after no ','
+    Given the buffer is empty
+    When I insert:
+    """
+    {
+      "name": 100
+    """
+    And I press "C-j"
+    Then current column should be 2
+
   Scenario: Indent configuration
     Given the buffer is empty
     When I set jsonconfig-basic-offset to 4
