@@ -27,6 +27,7 @@
 
 (require 'button)
 (require 'smie)
+(require 'jsonconfig-spec)
 
 (defgroup jsonconfig nil
   "Major mode to edit JSON configuration."
@@ -84,6 +85,11 @@
    (list jsonconfig-property-name-regexp 1 font-lock-variable-name-face t)
    (list 'jsonconfig--activate-link 0 ''link t)))
 
+(defvar jsonconfig-file-type nil)
+(make-variable-buffer-local 'jsonconfig-file-type)
+(defvar jsonconfig-file-spec nil)
+(make-variable-buffer-local 'jsonconfig-file-spec)
+
 (defun jsonconfig--activate-link (limit)
   "Activate URL like string from the current point to LIMIT as button."
   (when (re-search-forward jsonconfig-url-regexp limit t)
@@ -120,14 +126,41 @@
             (push (cons (substring s 1 (- (length s) 1)) p) result))))
       (list (cons "Variables" (nreverse result))))))
 
+(defun jsonconfig--guess-file-type ()
+  "Guess known JSON file type from the name."
+  (let* ((path (buffer-file-name))
+         (file (and path (file-name-nondirectory path))))
+    (cond
+     ((string= file "package.json")
+      (setq jsonconfig-file-type 'package-json)
+      (setq jsonconfig-file-spec (jsonconfig-spec "package-json")))
+     ((string= file "bower.json")
+      (setq jsonconfig-file-type 'bower-json)
+      (setq jsonconfig-file-spec (jsonconfig-spec "bower-json")))
+     (t
+      (setq jsonconfig-file-type nil)))))
+
+(defun jsonconfig-completion-at-point ()
+  "Complete JSON object property name according to JSON file type."
+  (when jsonconfig-file-type
+    (let ((ppss (syntax-ppss)))
+      (when (and (= (nth 0 ppss) 1)
+                 (looking-back "[{,][[:space:]\n]*\"\\([[:word:]]*\\)"))
+        (list (match-beginning 1)
+              (point)
+              jsonconfig-file-spec)))))
+
 ;;;###autoload
 (define-derived-mode jsonconfig-mode prog-mode "JSON config"
   "Major mode to edit JSON configuration."
   (set-syntax-table jsonconfig-syntax-table)
   (set (make-local-variable 'comment-start) "")
-  (smie-setup jsonconfig-grammer 'jsonconfig--smie-rules)
+  (smie-setup jsonconfig-grammer #'jsonconfig--smie-rules)
   (setq font-lock-defaults (list jsonconfig-font-lock-keywords))
-  (setq imenu-create-index-function 'jsonconfig-create-imenu-index)
+  (setq imenu-create-index-function #'jsonconfig-create-imenu-index)
+  (jsonconfig--guess-file-type)
+  (add-hook 'completion-at-point-functions
+            #'jsonconfig-completion-at-point nil t)
   (run-hooks 'jsonconfig-mode-hook))
 
 (provide 'jsonconfig-mode)
