@@ -161,8 +161,7 @@
   (setq imenu-create-index-function #'jsonconfig-create-imenu-index)
   (jsonconfig--guess-file-type)
   (add-hook 'completion-at-point-functions
-            #'jsonconfig-completion-at-point nil t)
-  (run-hooks 'jsonconfig-mode-hook))
+            #'jsonconfig-completion-at-point nil t))
 
 (provide 'jsonconfig-mode)
 ;;; jsonconfig-mode.el ends here
