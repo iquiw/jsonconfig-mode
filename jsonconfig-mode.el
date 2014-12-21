@@ -146,7 +146,7 @@
   (when jsonconfig-file-type
     (let ((ppss (syntax-ppss)))
       (when (and (= (nth 0 ppss) 1)
-                 (looking-back "[{,][[:space:]\n]*\"\\([[:word:]]*\\)"))
+                 (looking-back "[{,][[:space:]\n]*\"\\(\\|[[:word:]]+\\>\\)"))
         (list (match-beginning 1)
               (point)
               jsonconfig-file-spec)))))
