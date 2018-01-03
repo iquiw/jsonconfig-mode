@@ -5,7 +5,7 @@
 ;; Author:    Iku Iwasa <iku.iwasa@gmail.com>
 ;; URL:       https://github.com/iquiw/jsonconfig-mode
 ;; Version:   0.0.0
-;; Package-Requires: ((emacs "23.3"))
+;; Package-Requires: ((emacs "24"))
 ;; Keywords:  json
 ;; Stability: unstable
 
