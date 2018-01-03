@@ -1,6 +1,6 @@
 ;;; jsonconfig-config.el --- jsonconfig-mode configuration.
 
-;; Copyright (C) 2014 by Iku Iwasa
+;; Copyright (C) 2014-2018 by Iku Iwasa
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
