@@ -151,24 +151,6 @@
               (point)
               jsonconfig-file-spec)))))
 
-(defun jsonconfig-find-next-property ()
-  (let ((ppss (syntax-ppss)))
-    (when (nth 3 ppss)
-      (goto-char (nth 8 ppss)))))
-
-(defun jsonconfig-forward-token ()
-  (skip-syntax-forward " ")
-  (cond
-   ((looking-at (regexp-opt '("{" "[" ":" ",")))
-    (goto-char (match-end 0))
-    (match-string-no-properties 0))
-   ((looking-at "\"")
-    (buffer-substring-no-properties
-     (point)
-     (progn
-       (forward-sexp)
-       (point))))))
-
 ;;;###autoload
 (define-derived-mode jsonconfig-mode prog-mode "JSON config"
   "Major mode to edit JSON configuration."
